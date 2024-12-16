@@ -29,7 +29,7 @@
               <h5>{{ username }}</h5>
               <i class="pi pi-user mx-2"></i>
             </div>
-            <Button severity="danger"  v-else @click="openDialog" label="ورود به حساب" />
+            <Button  v-else @click="openDialog" label="ورود به حساب" />
   
           </div>
         </div>
@@ -97,12 +97,31 @@ const login = async () => {
       closeModal();  
       isLoggedIn.value = true
       showSuccess();
+      pageData();
     }
   } catch (error) {  
     console.error('Error logging in:', error);  
     // You can add error handling here to inform the user  
   }  
 };  
+
+const pageData = async () =>{
+  debugger
+  try {  
+    const response = await axios.get('https://bots.mbhanife.com/api/mobix', {  
+      headers: {  
+        Authorization: `Bearer ${token.value}` // Ensure "Bearer " is included  
+      }  
+    });  
+
+    data.value = response.data;  
+    toast.add({ severity: 'success', summary: 'Success', detail: 'Data fetched successfully!' });  
+  } catch (err) {  
+    console.error('Error fetching data:', err);  
+    error.value = 'Failed to fetch data. Please try again.';  
+    toast.add({ severity: 'error', summary: 'Error', detail: error.value });  
+  }   
+}
 
 const toast = useToast();
 debugger
