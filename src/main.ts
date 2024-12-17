@@ -2,7 +2,6 @@ import './assets/main.css'
 import 'bootstrap/dist/css/bootstrap.rtl.min.css';
 import "bootstrap";
 import 'primeicons/primeicons.css'; // PrimeIcons stylesheet  
-import 'primeflex/primeflex.css'; // Optional: If you're using PrimeFlex  
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
