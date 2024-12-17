@@ -106,7 +106,6 @@ const login = async () => {
 };  
 
 const pageData = async () =>{
-  debugger
   try {  
     const response = await axios.get('https://bots.mbhanife.com/api/mobix', {  
       headers: {  
@@ -124,7 +123,6 @@ const pageData = async () =>{
 }
 
 const toast = useToast();
-debugger
 const showSuccess = () => {
     toast.add({ severity: 'success', summary: 'تایید شد', detail: 'با موفقیت وارد شدید', life: 3000 });
 

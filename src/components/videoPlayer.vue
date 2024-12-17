@@ -2,9 +2,9 @@
   <div class="video-container">
     <video ref="videoPlayer" class="plyr" playsinline controls>
       <!-- Multi-quality sources -->
-      <source src="https://example.com/video-720p.mp4" type="video/mp4" label="720p" />
-      <source src="https://example.com/video-480p.mp4" type="video/mp4" label="480p" />
-      <source src="https://example.com/video-360p.mp4" type="video/mp4" label="360p" />
+      <source src="../assets/hls.m3u8"  label="720p" />
+      <source src="../assets/hls.m3u8"  label="480p" />
+      <source src="../assets/hls.m3u8"  label="360p" />
 
       <!-- Subtitles -->
       <track kind="subtitles" label="English" src="/path-to-captions.vtt" srclang="en" default />
@@ -16,6 +16,7 @@
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import Plyr from "plyr";
 import "plyr/dist/plyr.css";
+import Hls from "hls.js"; // Import hls.js  
 
 const videoPlayer = ref(null);
 let player = null;
@@ -52,6 +53,21 @@ onMounted(() => {
       },
     },
   });
+  
+  if (Hls.isSupported()) {  
+    const hls = new Hls();  
+    const videoSrc = "../assets/hls.m3u8"; // Your HLS stream URL  
+
+    hls.loadSource(videoSrc);  
+    hls.attachMedia(videoPlayer.value);  
+    hls.on(Hls.Events.MANIFEST_PARSED, () => {  
+      player.play(); // Start playing once the manifest is parsed  
+    });  
+  } else if (videoPlayer.value.canPlayType("application/vnd.apple.mpegurl")) {  
+    // For Safari support  
+    videoPlayer.value.src = "../assets/hls.m3u8";  
+    player.play();  
+  } 
 });
 
 onBeforeUnmount(() => {
